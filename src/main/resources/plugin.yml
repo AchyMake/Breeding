@@ -1,0 +1,20 @@
+name: Breeding
+version: '${project.version}'
+main: org.achymake.breeding.Breeding
+api-version: '1.21'
+prefix: '${project.name}'
+load: STARTUP
+author: AchyMake
+description: '${project.description}'
+website: '${project.url}'
+commands:
+  breeding:
+    permission: breeding.command.breeding
+    description: main command
+permissions:
+  breeding.command.breeding:
+    description: main command
+    default: op
+  breeding.event.join.update:
+    description: gets update on join
+    default: op

@@ -1,0 +1,246 @@
+notify-update: true
+entity:
+  ENTITY_TYPE_1:
+    enable: false
+    chances:
+      idName:
+        chance: 0.0
+        attack_damage: 0.0
+        health: 0.0
+        scale: 0.0
+  ENTITY_TYPE_2:
+    enable: false
+    chances:
+      idName:
+        chance: 0.0
+        attack_damage:
+          min: 0.0
+          max: 0.0
+        health:
+          min: 0.0
+          max: 0.0
+        scale:
+          min: 0.0
+          max: 0.0
+  ARMADILLO:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  AXOLOTL:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  BEE:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  CAMEL:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  CAMEL_HUSK:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  CAT:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  CHICKEN:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  COW:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  DONKEY:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  FOX:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  FROG:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  GOAT:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  HAPPY_GHAST:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  HOGLIN:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  HORSE:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+      pony:
+        chance: 0.02
+        scale: 0.75
+  LLAMA:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  MULE:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  MOOSHROOM:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  NAUTILUS:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  OCELOT:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  PANDA:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  PARROT:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  PIG:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  POLAR_BEAR:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  RABBIT:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  SHEEP:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  SKELETON_HORSE:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  SNIFFER:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  STRIDER:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  TRADER_LLAMA:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  TURTLE:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  VILLAGER:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+      midget:
+        chance: 0.05
+        scale: 0.6
+  WANDERING_TRADER:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  WOLF:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  ZOMBIE_HORSE:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
+  ZOMBIE_NAUTILUS:
+    enable: true
+    chances:
+      female:
+        chance: 0.5
+        scale: 0.75
