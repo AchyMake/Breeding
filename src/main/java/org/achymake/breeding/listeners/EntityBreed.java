@@ -24,6 +24,6 @@ public class EntityBreed implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityBreed(EntityBreedEvent event) {
         if (getEntityHandler().setStats(event.getEntity()))return;
-        getEntityHandler().copyStats(event.getEntity(), event.getFather(), event.getMother());
+        getEntityHandler().randomizeStats(event.getEntity(), event.getFather(), event.getMother());
     }
 }

@@ -45,6 +45,7 @@ public final class Breeding extends JavaPlugin {
     }
     private void events() {
         new EntityBreed();
+        new EntityTransform();
         new PlayerJoin();
     }
     public void reload() {

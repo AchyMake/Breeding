@@ -38,7 +38,14 @@ public class EntityHandler {
     public AttributeInstance getAttribute(LivingEntity livingEntity, Attribute attribute) {
         return livingEntity.getAttribute(attribute);
     }
-    public void copyAttackDamage(LivingEntity baby, LivingEntity dad, LivingEntity mom) {
+    public void randomizeStats(LivingEntity baby, LivingEntity dad, LivingEntity mom) {
+        randomizeAttackDamage(baby, dad, mom);
+        randomizeScale(baby, dad, mom);
+        if (!isHorseType(baby)) {
+            randomizeHealth(baby, dad, mom);
+        }
+    }
+    public void randomizeAttackDamage(LivingEntity baby, LivingEntity dad, LivingEntity mom) {
         var babyAttribute = getAttribute(baby, Attribute.ATTACK_DAMAGE);
         if (babyAttribute != null) {
             var dadValue = getAttributeValue(dad, Attribute.ATTACK_DAMAGE);
@@ -50,7 +57,7 @@ public class EntityHandler {
             }
         }
     }
-    public void copyHealth(LivingEntity baby, LivingEntity dad, LivingEntity mom) {
+    public void randomizeHealth(LivingEntity baby, LivingEntity dad, LivingEntity mom) {
         var babyAttribute = getAttribute(baby, Attribute.MAX_HEALTH);
         if (babyAttribute != null) {
             var dadValue = getAttributeValue(dad, Attribute.MAX_HEALTH);
@@ -62,7 +69,7 @@ public class EntityHandler {
             }
         }
     }
-    public void copyScale(LivingEntity baby, LivingEntity dad, LivingEntity mom) {
+    public void randomizeScale(LivingEntity baby, LivingEntity dad, LivingEntity mom) {
         var babyAttribute = getAttribute(baby, Attribute.SCALE);
         if (babyAttribute != null) {
             var dadValue = getAttributeValue(dad, Attribute.SCALE);
@@ -73,14 +80,41 @@ public class EntityHandler {
                 babyAttribute.setBaseValue(getRandomHandler().nextDouble(dadValue, momValue));
             }
         }
-    }
-    public void copyStats(LivingEntity baby, LivingEntity dad, LivingEntity mom) {
-        copyAttackDamage(baby, dad, mom);
-        copyScale(baby, dad, mom);
-        if (!isHorseType(baby)) {
-            copyHealth(baby, dad, mom);
         }
-    }
+        public void copyStats(LivingEntity before, LivingEntity after) {
+            copyAttackDamage(before, after);
+            copyScale(before, after);
+            if (!isHorseType(after)) {
+                copyHealth(before, after);
+            }
+        }
+        public void copyAttackDamage(LivingEntity before, LivingEntity after) {
+            var afterAttribute = getAttribute(after, Attribute.ATTACK_DAMAGE);
+            if (afterAttribute != null) {
+                var beforeValue = getAttributeValue(before, Attribute.ATTACK_DAMAGE);
+                if (beforeValue > 0) {
+                    afterAttribute.setBaseValue(beforeValue);
+                }
+            }
+        }
+        public void copyHealth(LivingEntity before, LivingEntity after) {
+            var afterAttribute = getAttribute(after, Attribute.MAX_HEALTH);
+            if (afterAttribute != null) {
+                var beforeValue = getAttributeValue(before, Attribute.MAX_HEALTH);
+                if (beforeValue > 0) {
+                    afterAttribute.setBaseValue(beforeValue);
+                }
+            }
+        }
+        public void copyScale(LivingEntity before, LivingEntity after) {
+            var afterAttribute = getAttribute(after, Attribute.SCALE);
+            if (afterAttribute != null) {
+                var beforeValue = getAttributeValue(before, Attribute.SCALE);
+                if (beforeValue > 0) {
+                    afterAttribute.setBaseValue(beforeValue);
+                }
+            }
+        }
     private Set<Map.Entry<String, Double>> getChances(LivingEntity livingEntity) {
         var levels = new HashMap<String, Double>();
         var entityType = livingEntity.getType();
