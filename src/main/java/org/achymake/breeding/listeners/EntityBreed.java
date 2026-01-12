@@ -23,6 +23,7 @@ public class EntityBreed implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityBreed(EntityBreedEvent event) {
+        if (event.isCancelled())return;
         if (getEntityHandler().setStats(event.getEntity()))return;
         getEntityHandler().randomizeStats(event.getEntity(), event.getFather(), event.getMother());
     }

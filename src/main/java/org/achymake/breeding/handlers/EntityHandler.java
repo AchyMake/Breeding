@@ -4,10 +4,15 @@ import org.achymake.breeding.Breeding;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class EntityHandler {
     private Breeding getInstance() {
@@ -28,6 +33,9 @@ public class EntityHandler {
         } else if (livingEntity.getType().equals(get("donkey"))) {
             return true;
         } else return livingEntity.getType().equals(get("mule"));
+    }
+    public boolean isEnable(LivingEntity livingEntity) {
+        return getConfig().getBoolean("entity." + livingEntity.getType() + ".enable");
     }
     public double getAttributeValue(LivingEntity livingEntity, Attribute attribute) {
         var value = livingEntity.getAttribute(attribute);
@@ -115,58 +123,56 @@ public class EntityHandler {
                 }
             }
         }
-    private Set<Map.Entry<String, Double>> getChances(LivingEntity livingEntity) {
+    private List<Map.Entry<String, Double>> getChances(LivingEntity livingEntity) {
         var levels = new HashMap<String, Double>();
         var entityType = livingEntity.getType();
-        getConfig().getConfigurationSection("entity." + entityType + ".chances").getKeys(false).forEach(key -> levels.put(key, getConfig().getDouble("entity." + entityType + ".chances." + key + ".chance")));
-        var list = new ArrayList<>(levels.entrySet());
-        list.sort(Collections.reverseOrder(Map.Entry.comparingByValue()));
-        var result = new LinkedHashMap<String, Double>();
-        result.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-        for (var entry : list) {
-            result.put(entry.getKey(), entry.getValue());
+        var section = getConfig().getConfigurationSection("entity." + entityType + ".chances");
+        if (section != null) {
+            for (var key : section.getKeys(false)) {
+                var chance = section.getDouble(key + ".chance");
+                if (chance > 0) {
+                    levels.put(key, chance);
+                }
+            }
         }
-        return result.entrySet();
-    }
-    public boolean isEnable(LivingEntity livingEntity) {
-        return getConfig().getBoolean("entity." + livingEntity.getType() + ".enable");
+        var listed = new ArrayList<>(levels.entrySet());
+        listed.sort(Collections.reverseOrder(Map.Entry.comparingByValue()));
+        return listed.stream().toList();
     }
     public boolean setStats(LivingEntity livingEntity) {
         var entityType = livingEntity.getType();
         if (isEnable(livingEntity)) {
             var chances = getChances(livingEntity);
             if (!chances.isEmpty()) {
-                chances.forEach(listed -> {
+                for (var listed : chances) {
                     var chance = listed.getValue();
                     if (getRandomHandler().isTrue(chance)) {
                         var key = listed.getKey();
                         var section = "entity." + entityType + ".chances." + key;
                         if (getConfig().isDouble(section + ".attack_damage")) {
-                            livingEntity.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(getConfig().getDouble(section + ".attack_damage"));
+                            getAttribute(livingEntity, Attribute.ATTACK_DAMAGE).setBaseValue(getConfig().getDouble(section + ".attack_damage"));
                         } else if (getConfig().isDouble(section + ".attack_damage.min") && getConfig().isDouble(section + ".attack_damage.max")) {
-                            livingEntity.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(getRandomHandler().nextDouble(getConfig().getDouble(section + ".attack_damage.min"), getConfig().getDouble(section + ".attack_damage.max")));
+                            getAttribute(livingEntity, Attribute.ATTACK_DAMAGE).setBaseValue(getRandomHandler().nextDouble(getConfig().getDouble(section + ".attack_damage.min"), getConfig().getDouble(section + ".attack_damage.max")));
                         }
                         if (getConfig().isDouble(section + ".health")) {
                             var health = getConfig().getDouble(section + ".health");
-                            livingEntity.getAttribute(Attribute.MAX_HEALTH).setBaseValue(health);
+                            getAttribute(livingEntity, Attribute.MAX_HEALTH).setBaseValue(health);
                             livingEntity.setHealth(health);
                         } else if (getConfig().isDouble(section + ".health.min") && getConfig().isDouble(section + ".health.max")) {
                             var healthMin = getConfig().getDouble(section + ".health.min");
                             var healthMax = getConfig().getDouble(section + ".health.max");
                             var result = getRandomHandler().nextDouble(healthMin, healthMax);
-                            livingEntity.getAttribute(Attribute.MAX_HEALTH).setBaseValue(result);
+                            getAttribute(livingEntity, Attribute.MAX_HEALTH).setBaseValue(result);
                             livingEntity.setHealth(result);
                         }
                         if (getConfig().isDouble(section + ".scale")) {
-                            livingEntity.getAttribute(Attribute.SCALE).setBaseValue(getConfig().getDouble(section + ".scale"));
+                            getAttribute(livingEntity, Attribute.SCALE).setBaseValue(getConfig().getDouble(section + ".scale"));
                         } else if (getConfig().isDouble(section + ".scale.min") && getConfig().isDouble(section + ".scale.max")) {
-                            livingEntity.getAttribute(Attribute.SCALE).setBaseValue(getRandomHandler().nextDouble(getConfig().getDouble(section + ".scale.min"), getConfig().getDouble(section + ".scale.max")));
+                            getAttribute(livingEntity, Attribute.SCALE).setBaseValue(getRandomHandler().nextDouble(getConfig().getDouble(section + ".scale.min"), getConfig().getDouble(section + ".scale.max")));
                         }
+                        return true;
                     }
-                });
-                return true;
+                }
             }
         }
         return false;

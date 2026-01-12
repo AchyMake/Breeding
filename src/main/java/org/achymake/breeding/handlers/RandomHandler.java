@@ -19,10 +19,4 @@ public class RandomHandler {
     public String format(double value) {
         return new DecimalFormat("#,##0.00").format(value).replace(",", ".");
     }
-    public double makeRandom(double value) {
-        return Double.parseDouble(format(nextDouble(value - value / 4, value + value / 6)));
-    }
-    public double makeRandomBig(double value) {
-        return Double.parseDouble(format(nextDouble(value - value / 2, value + value / 2)));
-    }
 }
